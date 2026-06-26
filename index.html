@@ -5,21 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Mesa de Ayuda Odoo · Ameyalli</title>
 <style>
-  /* ====== CONFIG VISUAL — paleta Ameyalli / VILTICS ====== */
-  :root{
-    --teal:#017E84; --teal-d:#015E63; --plum:#714B67; --navy:#1F3A5F;
-    --paper:#F6F4EF; --surface:#FFFFFF; --line:#E4DFD6; --ink:#21303F; --sub:#6B7785;
-  }
+  :root{--teal:#017E84;--teal-d:#015E63;--plum:#714B67;--navy:#1F3A5F;--paper:#F6F4EF;--surface:#FFFFFF;--line:#E4DFD6;--ink:#21303F;--sub:#6B7785;}
   *{box-sizing:border-box;}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--paper);color:var(--ink);}
   .wrap{max-width:1080px;margin:0 auto;}
-  header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;background:linear-gradient(120deg,var(--navy),var(--teal));color:#fff;flex-wrap:wrap;}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 22px;background:linear-gradient(120deg,var(--navy),var(--teal));color:#fff;flex-wrap:wrap;}
   .brand{display:flex;align-items:center;gap:12px;}
   .knot{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);}
   .title{font-size:19px;font-weight:800;line-height:1.1;}
   .sub{font-size:11.5px;opacity:.85;letter-spacing:.4px;text-transform:uppercase;}
-  .report{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--navy);border:none;border-radius:10px;padding:10px 16px;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none;}
+  nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  nav button{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.18);padding:9px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;}
+  nav button:hover{background:rgba(255,255,255,.20);}
+  nav button.on{background:#fff;color:var(--navy);border-color:#fff;}
+  .count{background:var(--plum);color:#fff;border-radius:20px;padding:1px 7px;font-size:11px;font-weight:700;}
   main{padding:22px;}
+  .col{display:flex;flex-direction:column;gap:18px;max-width:680px;margin:0 auto;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);}
+  .h2{font-size:23px;font-weight:800;color:var(--navy);margin:6px 0 14px;line-height:1.15;}
+  .lead{font-size:14px;color:var(--sub);line-height:1.55;margin:0 0 16px;}
+  .banner{display:flex;align-items:flex-start;gap:8px;background:#EEF4F4;border:1px solid #BFDADC;color:#0C5054;border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.5;margin-bottom:16px;}
+  .modetoggle{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:16px;}
+  .modetoggle button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;border:none;background:transparent;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:600;color:var(--sub);cursor:pointer;}
+  .modetoggle button.on{background:#fff;color:var(--navy);box-shadow:0 1px 4px rgba(31,58,95,.12);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px;}
+  .field>span{font-size:12.5px;font-weight:600;color:var(--navy);}
+  .field em{color:var(--sub);font-weight:400;font-style:normal;}
+  .field input,.field select,.field textarea{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;font-family:inherit;color:var(--ink);background:#fff;transition:.15s;width:100%;}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px #017E8422;}
+  .field textarea{resize:vertical;}
+  .seg{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:3px;margin-bottom:13px;}
+  .seg button{border:none;background:transparent;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;color:var(--sub);cursor:pointer;}
+  .seg button.on{background:var(--navy);color:#fff;}
+  .primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--teal);color:#fff;border:none;border-radius:11px;padding:13px 18px;font-size:14.5px;font-weight:700;cursor:pointer;width:100%;transition:.15s;text-decoration:none;}
+  .primary:hover{background:var(--teal-d);}
   .pubrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
   .pubnote{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--sub);background:#fff;border:1px solid var(--line);border-radius:9px;padding:7px 12px;}
   .pubnote code,.empty code{background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px;color:var(--navy);}
@@ -32,8 +53,8 @@
   .chips button{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--sub);cursor:pointer;transition:.12s;}
   .chips button:hover{border-color:var(--navy);}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;}
-  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:.15s;}
-  .card:hover{box-shadow:0 6px 20px rgba(31,58,95,.08);transform:translateY(-2px);}
+  .kbcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:.15s;}
+  .kbcard:hover{box-shadow:0 6px 20px rgba(31,58,95,.08);transform:translateY(-2px);}
   .ctop{display:flex;justify-content:space-between;gap:8px;}
   .pill{display:inline-flex;align-items:center;border:1px solid;border-radius:20px;padding:2px 10px;font-size:11.5px;font-weight:700;}
   .ctitle{font-size:15.5px;font-weight:700;color:var(--navy);margin:2px 0;line-height:1.25;}
@@ -53,151 +74,194 @@
   .md blockquote{border-left:3px solid var(--line);margin:8px 0;padding:2px 0 2px 12px;color:var(--sub);}
   .md .md-img{max-width:100%;border-radius:10px;border:1px solid var(--line);margin:8px 0;display:block;}
   .md .md-asset{display:inline-block;margin:4px 0;color:var(--teal);font-weight:600;text-decoration:none;}
+  .panel{display:flex;flex-direction:column;gap:14px;max-width:760px;margin:0 auto;}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;}
+  .pmeta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+  .ptitle{font-size:16px;font-weight:700;color:var(--navy);margin:0 0 3px;}
+  .pfoot{font-size:11.5px;color:var(--sub);}
+  .pdesc{font-size:13.5px;line-height:1.55;color:var(--ink);margin:10px 0 12px;}
+  .pactions{display:flex;gap:8px;flex-wrap:wrap;}
+  .ghost{display:inline-flex;align-items:center;gap:7px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:13px;font-weight:600;color:var(--navy);cursor:pointer;text-decoration:none;transition:.12s;}
+  .ghost:hover{border-color:var(--navy);}
+  .ghost.dis{opacity:.55;cursor:not-allowed;}
   .empty{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;color:var(--sub);font-size:14px;padding:44px 20px;background:#fff;border:1px dashed var(--line);border-radius:14px;}
   .errbox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#FCEFEF;border:1px solid #E6BCBC;color:#8A2B2B;border-radius:12px;padding:14px 16px;font-size:13.5px;}
   footer{text-align:center;font-size:11.5px;color:var(--sub);padding:16px;border-top:1px solid var(--line);background:#fff;}
   .spin{width:15px;height:15px;border:2px solid var(--line);border-top-color:var(--navy);border-radius:50%;display:inline-block;animation:spin .7s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
-  @media (max-width:560px){.title{font-size:17px;}}
+  .hidden{display:none;}
+  @media (max-width:560px){.title{font-size:17px;}.grid2{grid-template-columns:1fr;}.h2{font-size:20px;}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div class="brand">
-      <span class="knot" aria-hidden="true">
-        <svg viewBox="0 0 28 28" width="26" height="26"><path d="M5 9 C5 4, 23 4, 23 9 C23 14, 5 14, 5 19 C5 24, 23 24, 23 19" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
-      </span>
+      <span class="knot" aria-hidden="true"><svg viewBox="0 0 28 28" width="26" height="26"><path d="M5 9 C5 4, 23 4, 23 9 C23 14, 5 14, 5 19 C5 24, 23 24, 23 19" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg></span>
       <div><div class="title">Mesa de Ayuda Odoo</div><div class="sub">Ameyalli · soporte por VILTICS</div></div>
     </div>
-    <a class="report" id="reportBtn" href="#" target="_blank" rel="noreferrer">＋ Reportar una solicitud</a>
+    <nav>
+      <button id="nav-reportar" class="on" onclick="show('reportar')">＋ Reportar</button>
+      <button id="nav-soluciones" onclick="show('soluciones')">▦ Soluciones</button>
+      <button id="nav-panel" onclick="show('panel')">✉ Panel <span class="count" id="panelCount">0</span></button>
+    </nav>
   </header>
 
   <main>
-    <div class="pubrow">
-      <div class="pubnote">⟲ En vivo desde <code id="repoLabel"></code> · issues cerrados</div>
-      <button class="refresh" onclick="cargar()">⟳ Actualizar</button>
-    </div>
-    <div class="kbhead">
-      <div class="search">🔍 <input id="q" placeholder="Buscar en soluciones…" oninput="render()"/></div>
-      <div class="chips" id="chips"></div>
-    </div>
-    <div id="out"></div>
+    <!-- ===== REPORTAR ===== -->
+    <section id="view-reportar">
+      <div class="col">
+        <div class="card">
+          <div class="eyebrow">Nueva solicitud</div>
+          <h2 class="h2">¿Qué necesitas resolver?</h2>
+          <div class="modetoggle">
+            <button id="m-form" class="on" onclick="setMode('form')">▤ Escribir solicitud</button>
+            <button id="m-notion" onclick="setMode('notion')">⛓ Importar desde Notion</button>
+          </div>
+
+          <div id="paneForm">
+            <div class="banner">ℹ La respuesta inmediata con IA requiere el backend. Por ahora, este formulario crea el issue prellenado en GitHub, listo para enviar.</div>
+            <div class="grid2">
+              <label class="field"><span>Tu nombre</span><input id="f-autor" placeholder="Ej. Jaquelin"/></label>
+              <label class="field"><span>Módulo</span><select id="f-modulo"></select></label>
+            </div>
+            <div class="seg" id="f-tipo"></div>
+            <label class="field"><span>Describe lo que necesitas</span><textarea id="f-desc" rows="4" placeholder="Ej. Un pago de cliente quedó en la cuenta transitoria y no logro conciliarlo…"></textarea></label>
+            <label class="field"><span>🖼 Adjuntar imagen o video <em>(URL, opcional)</em></span><input id="f-media" placeholder="https://… (imagen, YouTube, Loom o .mp4)"/></label>
+            <button class="primary" onclick="enviarForm()">✦ Crear solicitud en GitHub</button>
+          </div>
+
+          <div id="paneNotion" class="hidden">
+            <div class="banner">ℹ La lectura automática de Notion con IA requiere el backend. Por ahora se adjunta el enlace y el contenido al issue.</div>
+            <label class="field"><span>⛓ Enlace de la página de Notion</span><input id="n-link" placeholder="https://www.notion.so/…"/></label>
+            <label class="field"><span>Contenido de la página <em>(opcional)</em></span><textarea id="n-text" rows="5" placeholder="Pega aquí el texto de tu página de Notion…"></textarea></label>
+            <button class="primary" onclick="enviarNotion()">✦ Crear solicitud en GitHub</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOLUCIONES ===== -->
+    <section id="view-soluciones" class="hidden">
+      <div class="pubrow">
+        <div class="pubnote">⟲ En vivo desde <code id="repoLabel"></code> · issues cerrados</div>
+        <button class="refresh" onclick="cargarSol()">⟳ Actualizar</button>
+      </div>
+      <div class="kbhead">
+        <div class="search">🔍 <input id="q" placeholder="Buscar en soluciones…" oninput="renderSol()"/></div>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div id="outSol"></div>
+    </section>
+
+    <!-- ===== PANEL ===== -->
+    <section id="view-panel" class="hidden">
+      <div class="pubrow">
+        <div class="pubnote">⟲ Issues abiertos en <code id="repoLabelP"></code></div>
+        <button class="refresh" onclick="cargarPanel()">⟳ Actualizar</button>
+      </div>
+      <div id="outPanel"></div>
+    </section>
   </main>
-  <footer>VILTICS · Odoo 19 SaaS · base de conocimiento leída en vivo desde GitHub</footer>
+  <footer>VILTICS · Odoo 19 SaaS · Soluciones y panel leídos en vivo desde GitHub</footer>
 </div>
 
 <script>
 /* =======================================================================
-   CONFIGURACIÓN — edita estas dos líneas
+   CONFIGURACIÓN — edita estas líneas
    ======================================================================= */
-const REPO = "vlepe/ameyalli-soporte-publico";        // repo público de soluciones
-const REPORT_URL = "https://github.com/vlepe/ameyalli-soporte-publico/issues/new"; // a dónde lleva "Reportar" (Google Form / Notion / Issue Form)
+const REPO_PUB   = "vlepe/ameyalli-soporte-publico";   // Soluciones (issues cerrados) y Panel (abiertos)
+const REPORT_REPO = "vlepe/ameyalli-soporte-publico";  // dónde se crea el issue al Reportar
 /* ======================================================================= */
 
-const MODULOS = {
-  "Ventas":"#017E84","Compras":"#9A6A1E","Contabilidad":"#1F3A5F",
-  "Inventario":"#3E7C59","Nómina":"#8A3B4C","Punto de Venta":"#714B67","Otro":"#5B6470"
-};
-let DATA = null, ERROR = "", filtroMod = "Todos";
+const MODULOS = {"Ventas":"#017E84","Compras":"#9A6A1E","Contabilidad":"#1F3A5F","Inventario":"#3E7C59","Nómina":"#8A3B4C","Punto de Venta":"#714B67","Otro":"#5B6470"};
+let SOL=null,SOL_ERR="",filtroMod="Todos",PAN=null,PAN_ERR="",mode="form",tipoSel="Duda";
 
-document.getElementById("repoLabel").textContent = REPO;
-document.getElementById("reportBtn").href = REPORT_URL;
+document.getElementById("repoLabel").textContent=REPO_PUB;
+document.getElementById("repoLabelP").textContent=REPO_PUB;
 
-/* ---- markdown mínimo (con imágenes) ---- */
-function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-function inline(t){
-  let s = esc(t);
-  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)[^)]*\)/g,'<img class="md-img" src="$2" alt="$1" loading="lazy">');
-  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)[^)]*\)/g,'<a href="$2" target="_blank" rel="noreferrer">$1</a>');
-  s = s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");
-  s = s.replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<em>$2</em>");
-  s = s.replace(/`([^`]+)`/g,"<code>$1</code>");
-  return s;
-}
-function mdToHtml(md){
-  if(!md) return "";
-  let src = md.replace(/\r\n/g,"\n");
-  const blocks=[]; src = src.replace(/```[\w]*\n([\s\S]*?)```/g,(m,c)=>{blocks.push(c);return "\u0000CB"+(blocks.length-1)+"\u0000";});
-  const lines = src.split("\n");
-  let html="", listType=null, para=[];
-  const flushPara=()=>{ if(para.length){ html+="<p>"+inline(para.join(" "))+"</p>"; para=[]; } };
-  const flushList=()=>{ if(listType){ html+="</"+listType+">"; listType=null; } };
-  for(const raw of lines){
-    const line = raw.replace(/\s+$/,""); const t = line.trim(); let m;
-    if(/^\u0000CB\d+\u0000$/.test(t)){ flushPara(); flushList(); html+="<pre><code>"+esc(blocks[+t.match(/\d+/)[0]])+"</code></pre>"; continue; }
-    if(!t){ flushPara(); flushList(); continue; }
-    if(m=line.match(/^(#{1,4})\s+(.*)$/)){ flushPara(); flushList(); const lvl=Math.min(m[1].length+1,5); html+="<h"+lvl+">"+inline(m[2])+"</h"+lvl+">"; continue; }
-    if(m=t.match(/^!\[([^\]]*)\]\(([^)\s]+)[^)]*\)$/)){ flushPara(); flushList(); html+='<img class="md-img" src="'+m[2]+'" alt="'+esc(m[1])+'" loading="lazy">'; continue; }
-    if(/^https?:\/\/\S+$/.test(t)){ flushPara(); flushList(); if(/\.(png|jpe?g|gif|webp)(\?|$)/i.test(t)) html+='<img class="md-img" src="'+t+'" loading="lazy">'; else html+='<a class="md-asset" href="'+t+'" target="_blank" rel="noreferrer">Ver adjunto</a>'; continue; }
-    if(m=line.match(/^>\s?(.*)$/)){ flushPara(); flushList(); html+="<blockquote>"+inline(m[1])+"</blockquote>"; continue; }
-    if(m=line.match(/^[-*]\s+(.*)$/)){ flushPara(); if(listType!=="ul"){flushList();html+="<ul>";listType="ul";} html+="<li>"+inline(m[1])+"</li>"; continue; }
-    if(m=line.match(/^\d+[.)]\s+(.*)$/)){ flushPara(); if(listType!=="ol"){flushList();html+="<ol>";listType="ol";} html+="<li>"+inline(m[1])+"</li>"; continue; }
-    para.push(line);
-  }
-  flushPara(); flushList();
-  return html;
-}
-function pill(text,color){ return '<span class="pill" style="color:'+color+';border-color:'+color+'55;background:'+color+'12">'+text+'</span>'; }
-
-/* ---- chips de módulo ---- */
-(function(){
-  const c = document.getElementById("chips");
-  ["Todos",...Object.keys(MODULOS)].forEach(m=>{
-    const b=document.createElement("button"); b.textContent=m;
-    b.onclick=()=>{ filtroMod=m; [...c.children].forEach(x=>x.removeAttribute("style")); if(m!=="Todos"){const col=MODULOS[m]; b.setAttribute("style","background:"+col+";border-color:"+col+";color:#fff");} else b.setAttribute("style","background:#1F3A5F;border-color:#1F3A5F;color:#fff"); render(); };
-    c.appendChild(b);
+/* ---- navegación ---- */
+function show(v){
+  ["reportar","soluciones","panel"].forEach(x=>{
+    document.getElementById("view-"+x).classList.toggle("hidden",x!==v);
+    document.getElementById("nav-"+x).classList.toggle("on",x===v);
   });
+  if(v==="soluciones" && SOL===null) cargarSol();
+  if(v==="panel") cargarPanel();
+}
+function setMode(m){mode=m;document.getElementById("m-form").classList.toggle("on",m==="form");document.getElementById("m-notion").classList.toggle("on",m==="notion");document.getElementById("paneForm").classList.toggle("hidden",m!=="form");document.getElementById("paneNotion").classList.toggle("hidden",m!=="notion");}
+
+/* ---- llenar selects/segments ---- */
+(function(){
+  const sel=document.getElementById("f-modulo");
+  Object.keys(MODULOS).forEach(m=>{const o=document.createElement("option");o.textContent=m;sel.appendChild(o);});
+  const seg=document.getElementById("f-tipo");
+  ["Duda","Problema","Solicitud"].forEach((t,i)=>{const b=document.createElement("button");b.textContent=t;if(i===0)b.className="on";b.onclick=()=>{tipoSel=t;[...seg.children].forEach(x=>x.className="");b.className="on";};seg.appendChild(b);});
+  const c=document.getElementById("chips");
+  ["Todos",...Object.keys(MODULOS)].forEach(m=>{const b=document.createElement("button");b.textContent=m;b.onclick=()=>{filtroMod=m;[...c.children].forEach(x=>x.removeAttribute("style"));const col=m==="Todos"?"#1F3A5F":MODULOS[m];b.setAttribute("style","background:"+col+";border-color:"+col+";color:#fff");renderSol();};c.appendChild(b);});
   c.firstChild.setAttribute("style","background:#1F3A5F;border-color:#1F3A5F;color:#fff");
 })();
 
-/* ---- lectura en vivo de GitHub ---- */
-async function cargar(){
-  const out = document.getElementById("out");
-  out.innerHTML = '<div class="empty"><span class="spin"></span> Leyendo soluciones desde GitHub…</div>';
-  DATA = null; ERROR = "";
-  try{
-    const r = await fetch("https://api.github.com/repos/"+REPO+"/issues?state=closed&per_page=50",{headers:{Accept:"application/vnd.github+json"}});
-    if(!r.ok){
-      ERROR = r.status===404 ? "No encontramos el repositorio. Revisa la constante REPO en el código."
-            : r.status===403 ? "Límite temporal de GitHub alcanzado (60 lecturas por hora). Intenta en un momento."
-            : "GitHub respondió con un error "+r.status+".";
-      DATA = []; render(); return;
-    }
-    const arr = await r.json();
-    DATA = arr.filter(i=>!i.pull_request).map(i=>({
-      num:i.number, titulo:i.title, body:i.body||"", url:i.html_url,
-      autor:(i.user&&i.user.login)||"",
-      fecha:new Date(i.closed_at||i.created_at).toLocaleDateString("es-MX",{day:"2-digit",month:"short",year:"numeric"}),
-      modulo:(i.labels||[]).map(l=>l.name).find(n=>MODULOS[n])||"Otro"
-    }));
-    render();
-  }catch(e){ ERROR = "No se pudo conectar con GitHub. Revisa tu conexión."; DATA=[]; render(); }
+/* ---- crear issue prellenado ---- */
+function ghNew(title,labels,body){
+  return "https://github.com/"+REPORT_REPO+"/issues/new?title="+encodeURIComponent(title)+"&labels="+encodeURIComponent(labels)+"&body="+encodeURIComponent(body);
+}
+function enviarForm(){
+  const autor=val("f-autor"),modulo=val("f-modulo"),desc=val("f-desc"),media=val("f-media");
+  if(!desc.trim()){alert("Escribe primero qué necesitas.");return;}
+  const title="["+modulo+"] "+desc.trim().slice(0,60);
+  const body="**Reportó:** "+(autor||"—")+"\n**Tipo:** "+tipoSel+"\n\n## Reporte\n"+desc.trim()+(media?("\n\n## Evidencia\n"+media):"");
+  window.open(ghNew(title,"soporte,"+modulo,body),"_blank");
+}
+function enviarNotion(){
+  const link=val("n-link"),text=val("n-text");
+  if(!link.trim()&&!text.trim()){alert("Pega el enlace de Notion o el contenido.");return;}
+  const title="[Notion] "+((text||link).trim().slice(0,55));
+  const body="**Origen:** Notion\n"+(link?("**Enlace:** "+link+"\n"):"")+(text?("\n## Contenido\n"+text):"");
+  window.open(ghNew(title,"soporte",body),"_blank");
+}
+function val(id){return document.getElementById(id).value||"";}
+
+/* ---- markdown ---- */
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function inline(t){let s=esc(t);s=s.replace(/!\[([^\]]*)\]\(([^)\s]+)[^)]*\)/g,'<img class="md-img" src="$2" alt="$1" loading="lazy">');s=s.replace(/\[([^\]]+)\]\(([^)\s]+)[^)]*\)/g,'<a href="$2" target="_blank" rel="noreferrer">$1</a>');s=s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");s=s.replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<em>$2</em>");s=s.replace(/`([^`]+)`/g,"<code>$1</code>");return s;}
+function mdToHtml(md){if(!md)return"";let src=md.replace(/\r\n/g,"\n");const blocks=[];src=src.replace(/```[\w]*\n([\s\S]*?)```/g,(m,c)=>{blocks.push(c);return"\u0000CB"+(blocks.length-1)+"\u0000";});const lines=src.split("\n");let html="",lt=null,para=[];const fp=()=>{if(para.length){html+="<p>"+inline(para.join(" "))+"</p>";para=[];}};const fl=()=>{if(lt){html+="</"+lt+">";lt=null;}};for(const raw of lines){const line=raw.replace(/\s+$/,"");const t=line.trim();let m;if(/^\u0000CB\d+\u0000$/.test(t)){fp();fl();html+="<pre><code>"+esc(blocks[+t.match(/\d+/)[0]])+"</code></pre>";continue;}if(!t){fp();fl();continue;}if(m=line.match(/^(#{1,4})\s+(.*)$/)){fp();fl();const lvl=Math.min(m[1].length+1,5);html+="<h"+lvl+">"+inline(m[2])+"</h"+lvl+">";continue;}if(m=t.match(/^!\[([^\]]*)\]\(([^)\s]+)[^)]*\)$/)){fp();fl();html+='<img class="md-img" src="'+m[2]+'" alt="'+esc(m[1])+'" loading="lazy">';continue;}if(/^https?:\/\/\S+$/.test(t)){fp();fl();if(/\.(png|jpe?g|gif|webp)(\?|$)/i.test(t))html+='<img class="md-img" src="'+t+'" loading="lazy">';else html+='<a class="md-asset" href="'+t+'" target="_blank" rel="noreferrer">Ver adjunto</a>';continue;}if(m=line.match(/^>\s?(.*)$/)){fp();fl();html+="<blockquote>"+inline(m[1])+"</blockquote>";continue;}if(m=line.match(/^[-*]\s+(.*)$/)){fp();if(lt!=="ul"){fl();html+="<ul>";lt="ul";}html+="<li>"+inline(m[1])+"</li>";continue;}if(m=line.match(/^\d+[.)]\s+(.*)$/)){fp();if(lt!=="ol"){fl();html+="<ol>";lt="ol";}html+="<li>"+inline(m[1])+"</li>";continue;}para.push(line);}fp();fl();return html;}
+function pill(text,color){return '<span class="pill" style="color:'+color+';border-color:'+color+'55;background:'+color+'12">'+text+'</span>';}
+function modDe(labels){return (labels||[]).map(l=>l.name).find(n=>MODULOS[n])||"Otro";}
+function fecha(s){return new Date(s).toLocaleDateString("es-MX",{day:"2-digit",month:"short",year:"numeric"});}
+
+/* ---- Soluciones (cerrados) ---- */
+async function cargarSol(){
+  const out=document.getElementById("outSol");out.innerHTML='<div class="empty"><span class="spin"></span> Leyendo soluciones desde GitHub…</div>';SOL=null;SOL_ERR="";
+  try{const r=await fetch("https://api.github.com/repos/"+REPO_PUB+"/issues?state=closed&per_page=50",{headers:{Accept:"application/vnd.github+json"}});
+    if(!r.ok){SOL_ERR=r.status===404?"No encontramos el repositorio. Revisa REPO_PUB en el código.":r.status===403?"Límite temporal de GitHub (60 lecturas/hora). Intenta en un momento.":"GitHub respondió error "+r.status+".";SOL=[];renderSol();return;}
+    const a=await r.json();SOL=a.filter(i=>!i.pull_request).map(i=>({num:i.number,titulo:i.title,body:i.body||"",url:i.html_url,autor:(i.user&&i.user.login)||"",fecha:fecha(i.closed_at||i.created_at),modulo:modDe(i.labels)}));renderSol();
+  }catch(e){SOL_ERR="No se pudo conectar con GitHub.";SOL=[];renderSol();}
+}
+function renderSol(){
+  const out=document.getElementById("outSol");if(SOL===null)return;
+  if(SOL_ERR){out.innerHTML='<div class="errbox">⚠ '+SOL_ERR+' <button class="refresh" onclick="cargarSol()">⟳ Reintentar</button></div>';return;}
+  const q=(document.getElementById("q").value||"").toLowerCase();
+  const list=SOL.filter(i=>(filtroMod==="Todos"||i.modulo===filtroMod)&&(!q||(i.titulo+" "+i.body).toLowerCase().includes(q)));
+  if(!list.length){out.innerHTML='<div class="empty">Aún no hay soluciones publicadas. Cierra un issue con etiqueta de módulo en <code>'+REPO_PUB+'</code> y aparecerá aquí.</div>';return;}
+  out.innerHTML='<div class="grid">'+list.map(i=>'<article class="kbcard"><div class="ctop">'+pill(i.modulo,MODULOS[i.modulo]||"#5B6470")+pill("Resuelto","#3E7C59")+'</div><h3 class="ctitle">'+esc(i.titulo)+'</h3><div class="md">'+mdToHtml(i.body)+'</div><div class="cfoot"><span>#'+i.num+' · '+esc(i.autor)+' · '+i.fecha+'</span><a class="ghlink" href="'+i.url+'" target="_blank" rel="noreferrer">↗ GitHub</a></div></article>').join("")+'</div>';
 }
 
-function render(){
-  const out = document.getElementById("out");
-  if(DATA===null) return;
-  if(ERROR){ out.innerHTML='<div class="errbox">⚠ '+ERROR+' <button class="refresh" onclick="cargar()">⟳ Reintentar</button></div>'; return; }
-  const q = (document.getElementById("q").value||"").toLowerCase();
-  const list = DATA.filter(i=>{
-    const okM = filtroMod==="Todos" || i.modulo===filtroMod;
-    const okQ = !q || (i.titulo+" "+i.body).toLowerCase().includes(q);
-    return okM && okQ;
-  });
-  if(list.length===0){ out.innerHTML='<div class="empty">Aún no hay soluciones publicadas. Cierra un issue con etiqueta de módulo en <code>'+REPO+'</code> y aparecerá aquí.</div>'; return; }
-  out.innerHTML = '<div class="grid">'+list.map(i=>(
-    '<article class="card">'+
-      '<div class="ctop">'+pill(i.modulo,MODULOS[i.modulo]||"#5B6470")+pill("Resuelto","#3E7C59")+'</div>'+
-      '<h3 class="ctitle">'+esc(i.titulo)+'</h3>'+
-      '<div class="md">'+mdToHtml(i.body)+'</div>'+
-      '<div class="cfoot"><span>#'+i.num+' · '+esc(i.autor)+' · '+i.fecha+'</span>'+
-      '<a class="ghlink" href="'+i.url+'" target="_blank" rel="noreferrer">↗ GitHub</a></div>'+
-    '</article>'
-  )).join("")+'</div>';
+/* ---- Panel (abiertos) ---- */
+async function cargarPanel(){
+  const out=document.getElementById("outPanel");out.innerHTML='<div class="empty"><span class="spin"></span> Leyendo issues abiertos…</div>';PAN=null;PAN_ERR="";
+  try{const r=await fetch("https://api.github.com/repos/"+REPO_PUB+"/issues?state=open&per_page=50",{headers:{Accept:"application/vnd.github+json"}});
+    if(!r.ok){PAN_ERR=r.status===404?"No encontramos el repositorio.":r.status===403?"Límite temporal de GitHub (60 lecturas/hora).":"GitHub respondió error "+r.status+".";PAN=[];renderPanel();return;}
+    const a=await r.json();PAN=a.filter(i=>!i.pull_request).map(i=>({num:i.number,titulo:i.title,body:i.body||"",url:i.html_url,autor:(i.user&&i.user.login)||"",fecha:fecha(i.created_at),modulo:modDe(i.labels)}));renderPanel();
+  }catch(e){PAN_ERR="No se pudo conectar con GitHub.";PAN=[];renderPanel();}
 }
-
-cargar();
+function renderPanel(){
+  const out=document.getElementById("outPanel");if(PAN===null)return;
+  document.getElementById("panelCount").textContent=PAN?PAN.length:0;
+  if(PAN_ERR){out.innerHTML='<div class="errbox">⚠ '+PAN_ERR+' <button class="refresh" onclick="cargarPanel()">⟳ Reintentar</button></div>';return;}
+  if(!PAN.length){out.innerHTML='<div class="empty">Bandeja limpia. No hay issues abiertos en <code>'+REPO_PUB+'</code>.</div>';return;}
+  out.innerHTML='<div class="panel">'+PAN.map(i=>'<div class="pcard"><div class="pmeta">'+pill(i.modulo,MODULOS[i.modulo]||"#5B6470")+pill("Abierto","#C9742B")+'</div><h3 class="ptitle">'+esc(i.titulo)+'</h3><div class="pfoot">#'+i.num+' · '+esc(i.autor)+' · '+i.fecha+'</div><div class="md" style="margin:10px 0 12px">'+mdToHtml(i.body)+'</div><div class="pactions"><span class="ghost dis" title="Requiere backend">⚒ Generar borrador con IA</span><a class="ghost" href="'+i.url+'" target="_blank" rel="noreferrer">↗ Abrir en GitHub</a></div></div>').join("")+'</div>';
+}
 </script>
 </body>
 </html>
