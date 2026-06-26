@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mesa de Ayuda Odoo · Ameyalli</title>
+<style>
+  /* ====== CONFIG VISUAL — paleta Ameyalli / VILTICS ====== */
+  :root{
+    --teal:#017E84; --teal-d:#015E63; --plum:#714B67; --navy:#1F3A5F;
+    --paper:#F6F4EF; --surface:#FFFFFF; --line:#E4DFD6; --ink:#21303F; --sub:#6B7785;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--paper);color:var(--ink);}
+  .wrap{max-width:1080px;margin:0 auto;}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;background:linear-gradient(120deg,var(--navy),var(--teal));color:#fff;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .knot{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);}
+  .title{font-size:19px;font-weight:800;line-height:1.1;}
+  .sub{font-size:11.5px;opacity:.85;letter-spacing:.4px;text-transform:uppercase;}
+  .report{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--navy);border:none;border-radius:10px;padding:10px 16px;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none;}
+  main{padding:22px;}
+  .pubrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .pubnote{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--sub);background:#fff;border:1px solid var(--line);border-radius:9px;padding:7px 12px;}
+  .pubnote code,.empty code{background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px;color:var(--navy);}
+  .refresh{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:9px;padding:7px 12px;font-size:12.5px;font-weight:600;color:var(--navy);cursor:pointer;}
+  .refresh:hover{border-color:var(--navy);}
+  .kbhead{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
+  .search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:9px 13px;flex:1;min-width:220px;}
+  .search input{border:none;outline:none;font-size:14px;width:100%;font-family:inherit;background:none;}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;}
+  .chips button{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--sub);cursor:pointer;transition:.12s;}
+  .chips button:hover{border-color:var(--navy);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:.15s;}
+  .card:hover{box-shadow:0 6px 20px rgba(31,58,95,.08);transform:translateY(-2px);}
+  .ctop{display:flex;justify-content:space-between;gap:8px;}
+  .pill{display:inline-flex;align-items:center;border:1px solid;border-radius:20px;padding:2px 10px;font-size:11.5px;font-weight:700;}
+  .ctitle{font-size:15.5px;font-weight:700;color:var(--navy);margin:2px 0;line-height:1.25;}
+  .cfoot{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--sub);margin-top:auto;padding-top:4px;}
+  .ghlink{display:inline-flex;align-items:center;gap:4px;color:var(--sub);text-decoration:none;}
+  .ghlink:hover{color:var(--navy);}
+  .md{font-size:13.5px;line-height:1.6;color:var(--ink);}
+  .md p{margin:0 0 8px;} .md p:empty{display:none;}
+  .md h2,.md h3,.md h4,.md h5{color:var(--navy);margin:12px 0 6px;line-height:1.25;}
+  .md h2{font-size:16px;} .md h3{font-size:15px;} .md h4{font-size:14px;} .md h5{font-size:13px;}
+  .md strong{color:var(--navy);}
+  .md ul,.md ol{margin:6px 0 10px;padding-left:20px;} .md li{margin:3px 0;}
+  .md a{color:var(--teal);}
+  .md code{background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px;}
+  .md pre{background:var(--navy);color:#E8EEF5;border-radius:10px;padding:12px;overflow:auto;font-size:12px;margin:8px 0;}
+  .md pre code{background:none;border:none;color:inherit;padding:0;}
+  .md blockquote{border-left:3px solid var(--line);margin:8px 0;padding:2px 0 2px 12px;color:var(--sub);}
+  .md .md-img{max-width:100%;border-radius:10px;border:1px solid var(--line);margin:8px 0;display:block;}
+  .md .md-asset{display:inline-block;margin:4px 0;color:var(--teal);font-weight:600;text-decoration:none;}
+  .empty{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;color:var(--sub);font-size:14px;padding:44px 20px;background:#fff;border:1px dashed var(--line);border-radius:14px;}
+  .errbox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#FCEFEF;border:1px solid #E6BCBC;color:#8A2B2B;border-radius:12px;padding:14px 16px;font-size:13.5px;}
+  footer{text-align:center;font-size:11.5px;color:var(--sub);padding:16px;border-top:1px solid var(--line);background:#fff;}
+  .spin{width:15px;height:15px;border:2px solid var(--line);border-top-color:var(--navy);border-radius:50%;display:inline-block;animation:spin .7s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @media (max-width:560px){.title{font-size:17px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <span class="knot" aria-hidden="true">
+        <svg viewBox="0 0 28 28" width="26" height="26"><path d="M5 9 C5 4, 23 4, 23 9 C23 14, 5 14, 5 19 C5 24, 23 24, 23 19" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </span>
+      <div><div class="title">Mesa de Ayuda Odoo</div><div class="sub">Ameyalli · soporte por VILTICS</div></div>
+    </div>
+    <a class="report" id="reportBtn" href="#" target="_blank" rel="noreferrer">＋ Reportar una solicitud</a>
+  </header>
+
+  <main>
+    <div class="pubrow">
+      <div class="pubnote">⟲ En vivo desde <code id="repoLabel"></code> · issues cerrados</div>
+      <button class="refresh" onclick="cargar()">⟳ Actualizar</button>
+    </div>
+    <div class="kbhead">
+      <div class="search">🔍 <input id="q" placeholder="Buscar en soluciones…" oninput="render()"/></div>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div id="out"></div>
+  </main>
+  <footer>VILTICS · Odoo 19 SaaS · base de conocimiento leída en vivo desde GitHub</footer>
+</div>
+
+<script>
+/* =======================================================================
+   CONFIGURACIÓN — edita estas dos líneas
+   ======================================================================= */
+const REPO = "vlepe/ameyalli-soporte-publico";        // repo público de soluciones
+const REPORT_URL = "https://github.com/vlepe/ameyalli-soporte-publico/issues/new"; // a dónde lleva "Reportar" (Google Form / Notion / Issue Form)
+/* ======================================================================= */
+
+const MODULOS = {
+  "Ventas":"#017E84","Compras":"#9A6A1E","Contabilidad":"#1F3A5F",
+  "Inventario":"#3E7C59","Nómina":"#8A3B4C","Punto de Venta":"#714B67","Otro":"#5B6470"
+};
+let DATA = null, ERROR = "", filtroMod = "Todos";
+
+document.getElementById("repoLabel").textContent = REPO;
+document.getElementById("reportBtn").href = REPORT_URL;
+
+/* ---- markdown mínimo (con imágenes) ---- */
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function inline(t){
+  let s = esc(t);
+  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)[^)]*\)/g,'<img class="md-img" src="$2" alt="$1" loading="lazy">');
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)[^)]*\)/g,'<a href="$2" target="_blank" rel="noreferrer">$1</a>');
+  s = s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");
+  s = s.replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<em>$2</em>");
+  s = s.replace(/`([^`]+)`/g,"<code>$1</code>");
+  return s;
+}
+function mdToHtml(md){
+  if(!md) return "";
+  let src = md.replace(/\r\n/g,"\n");
+  const blocks=[]; src = src.replace(/```[\w]*\n([\s\S]*?)```/g,(m,c)=>{blocks.push(c);return "\u0000CB"+(blocks.length-1)+"\u0000";});
+  const lines = src.split("\n");
+  let html="", listType=null, para=[];
+  const flushPara=()=>{ if(para.length){ html+="<p>"+inline(para.join(" "))+"</p>"; para=[]; } };
+  const flushList=()=>{ if(listType){ html+="</"+listType+">"; listType=null; } };
+  for(const raw of lines){
+    const line = raw.replace(/\s+$/,""); const t = line.trim(); let m;
+    if(/^\u0000CB\d+\u0000$/.test(t)){ flushPara(); flushList(); html+="<pre><code>"+esc(blocks[+t.match(/\d+/)[0]])+"</code></pre>"; continue; }
+    if(!t){ flushPara(); flushList(); continue; }
+    if(m=line.match(/^(#{1,4})\s+(.*)$/)){ flushPara(); flushList(); const lvl=Math.min(m[1].length+1,5); html+="<h"+lvl+">"+inline(m[2])+"</h"+lvl+">"; continue; }
+    if(m=t.match(/^!\[([^\]]*)\]\(([^)\s]+)[^)]*\)$/)){ flushPara(); flushList(); html+='<img class="md-img" src="'+m[2]+'" alt="'+esc(m[1])+'" loading="lazy">'; continue; }
+    if(/^https?:\/\/\S+$/.test(t)){ flushPara(); flushList(); if(/\.(png|jpe?g|gif|webp)(\?|$)/i.test(t)) html+='<img class="md-img" src="'+t+'" loading="lazy">'; else html+='<a class="md-asset" href="'+t+'" target="_blank" rel="noreferrer">Ver adjunto</a>'; continue; }
+    if(m=line.match(/^>\s?(.*)$/)){ flushPara(); flushList(); html+="<blockquote>"+inline(m[1])+"</blockquote>"; continue; }
+    if(m=line.match(/^[-*]\s+(.*)$/)){ flushPara(); if(listType!=="ul"){flushList();html+="<ul>";listType="ul";} html+="<li>"+inline(m[1])+"</li>"; continue; }
+    if(m=line.match(/^\d+[.)]\s+(.*)$/)){ flushPara(); if(listType!=="ol"){flushList();html+="<ol>";listType="ol";} html+="<li>"+inline(m[1])+"</li>"; continue; }
+    para.push(line);
+  }
+  flushPara(); flushList();
+  return html;
+}
+function pill(text,color){ return '<span class="pill" style="color:'+color+';border-color:'+color+'55;background:'+color+'12">'+text+'</span>'; }
+
+/* ---- chips de módulo ---- */
+(function(){
+  const c = document.getElementById("chips");
+  ["Todos",...Object.keys(MODULOS)].forEach(m=>{
+    const b=document.createElement("button"); b.textContent=m;
+    b.onclick=()=>{ filtroMod=m; [...c.children].forEach(x=>x.removeAttribute("style")); if(m!=="Todos"){const col=MODULOS[m]; b.setAttribute("style","background:"+col+";border-color:"+col+";color:#fff");} else b.setAttribute("style","background:#1F3A5F;border-color:#1F3A5F;color:#fff"); render(); };
+    c.appendChild(b);
+  });
+  c.firstChild.setAttribute("style","background:#1F3A5F;border-color:#1F3A5F;color:#fff");
+})();
+
+/* ---- lectura en vivo de GitHub ---- */
+async function cargar(){
+  const out = document.getElementById("out");
+  out.innerHTML = '<div class="empty"><span class="spin"></span> Leyendo soluciones desde GitHub…</div>';
+  DATA = null; ERROR = "";
+  try{
+    const r = await fetch("https://api.github.com/repos/"+REPO+"/issues?state=closed&per_page=50",{headers:{Accept:"application/vnd.github+json"}});
+    if(!r.ok){
+      ERROR = r.status===404 ? "No encontramos el repositorio. Revisa la constante REPO en el código."
+            : r.status===403 ? "Límite temporal de GitHub alcanzado (60 lecturas por hora). Intenta en un momento."
+            : "GitHub respondió con un error "+r.status+".";
+      DATA = []; render(); return;
+    }
+    const arr = await r.json();
+    DATA = arr.filter(i=>!i.pull_request).map(i=>({
+      num:i.number, titulo:i.title, body:i.body||"", url:i.html_url,
+      autor:(i.user&&i.user.login)||"",
+      fecha:new Date(i.closed_at||i.created_at).toLocaleDateString("es-MX",{day:"2-digit",month:"short",year:"numeric"}),
+      modulo:(i.labels||[]).map(l=>l.name).find(n=>MODULOS[n])||"Otro"
+    }));
+    render();
+  }catch(e){ ERROR = "No se pudo conectar con GitHub. Revisa tu conexión."; DATA=[]; render(); }
+}
+
+function render(){
+  const out = document.getElementById("out");
+  if(DATA===null) return;
+  if(ERROR){ out.innerHTML='<div class="errbox">⚠ '+ERROR+' <button class="refresh" onclick="cargar()">⟳ Reintentar</button></div>'; return; }
+  const q = (document.getElementById("q").value||"").toLowerCase();
+  const list = DATA.filter(i=>{
+    const okM = filtroMod==="Todos" || i.modulo===filtroMod;
+    const okQ = !q || (i.titulo+" "+i.body).toLowerCase().includes(q);
+    return okM && okQ;
+  });
+  if(list.length===0){ out.innerHTML='<div class="empty">Aún no hay soluciones publicadas. Cierra un issue con etiqueta de módulo en <code>'+REPO+'</code> y aparecerá aquí.</div>'; return; }
+  out.innerHTML = '<div class="grid">'+list.map(i=>(
+    '<article class="card">'+
+      '<div class="ctop">'+pill(i.modulo,MODULOS[i.modulo]||"#5B6470")+pill("Resuelto","#3E7C59")+'</div>'+
+      '<h3 class="ctitle">'+esc(i.titulo)+'</h3>'+
+      '<div class="md">'+mdToHtml(i.body)+'</div>'+
+      '<div class="cfoot"><span>#'+i.num+' · '+esc(i.autor)+' · '+i.fecha+'</span>'+
+      '<a class="ghlink" href="'+i.url+'" target="_blank" rel="noreferrer">↗ GitHub</a></div>'+
+    '</article>'
+  )).join("")+'</div>';
+}
+
+cargar();
+</script>
+</body>
+</html>
