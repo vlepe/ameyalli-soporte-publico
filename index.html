@@ -89,6 +89,9 @@
   footer{text-align:center;font-size:11.5px;color:var(--sub);padding:16px;border-top:1px solid var(--line);background:#fff;}
   .spin{width:15px;height:15px;border:2px solid var(--line);border-top-color:var(--navy);border-radius:50%;display:inline-block;animation:spin .7s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
+  .solbtn{align-self:flex-start;margin-top:2px;}
+  .solbox{border-top:1px dashed var(--line);padding-top:10px;margin-top:2px;}
+  .solpart+.solpart{border-top:1px dashed var(--line);margin-top:10px;padding-top:10px;}
   .hidden{display:none;}
   @media (max-width:560px){.title{font-size:17px;}.grid2{grid-template-columns:1fr;}.h2{font-size:20px;}}
 </style>
@@ -223,9 +226,11 @@ function enviarNotion(){
 function val(id){return document.getElementById(id).value||"";}
 
 /* ---- markdown ---- */
+function imgTag(u,a){return '<img class="md-img" src="'+u+'" alt="'+esc(a||"")+'" loading="lazy" referrerpolicy="no-referrer" data-href="'+u+'" onerror="imgFail(this)">';}
+function imgFail(el){el.outerHTML='<a class="md-asset" href="'+el.dataset.href+'" target="_blank" rel="noreferrer">Ver adjunto</a>';}
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-function inline(t){let s=esc(t);s=s.replace(/!\[([^\]]*)\]\(([^)\s]+)[^)]*\)/g,'<img class="md-img" src="$2" alt="$1" loading="lazy">');s=s.replace(/\[([^\]]+)\]\(([^)\s]+)[^)]*\)/g,'<a href="$2" target="_blank" rel="noreferrer">$1</a>');s=s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");s=s.replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<em>$2</em>");s=s.replace(/`([^`]+)`/g,"<code>$1</code>");return s;}
-function mdToHtml(md){if(!md)return"";let src=md.replace(/\r\n/g,"\n");const blocks=[];src=src.replace(/```[\w]*\n([\s\S]*?)```/g,(m,c)=>{blocks.push(c);return"\u0000CB"+(blocks.length-1)+"\u0000";});const lines=src.split("\n");let html="",lt=null,para=[];const fp=()=>{if(para.length){html+="<p>"+inline(para.join(" "))+"</p>";para=[];}};const fl=()=>{if(lt){html+="</"+lt+">";lt=null;}};for(const raw of lines){const line=raw.replace(/\s+$/,"");const t=line.trim();let m;if(/^\u0000CB\d+\u0000$/.test(t)){fp();fl();html+="<pre><code>"+esc(blocks[+t.match(/\d+/)[0]])+"</code></pre>";continue;}if(!t){fp();fl();continue;}if(m=line.match(/^(#{1,4})\s+(.*)$/)){fp();fl();const lvl=Math.min(m[1].length+1,5);html+="<h"+lvl+">"+inline(m[2])+"</h"+lvl+">";continue;}if(m=t.match(/^!\[([^\]]*)\]\(([^)\s]+)[^)]*\)$/)){fp();fl();html+='<img class="md-img" src="'+m[2]+'" alt="'+esc(m[1])+'" loading="lazy">';continue;}if(/^https?:\/\/\S+$/.test(t)){fp();fl();if(/\.(png|jpe?g|gif|webp)(\?|$)/i.test(t))html+='<img class="md-img" src="'+t+'" loading="lazy">';else html+='<a class="md-asset" href="'+t+'" target="_blank" rel="noreferrer">Ver adjunto</a>';continue;}if(m=line.match(/^>\s?(.*)$/)){fp();fl();html+="<blockquote>"+inline(m[1])+"</blockquote>";continue;}if(m=line.match(/^[-*]\s+(.*)$/)){fp();if(lt!=="ul"){fl();html+="<ul>";lt="ul";}html+="<li>"+inline(m[1])+"</li>";continue;}if(m=line.match(/^\d+[.)]\s+(.*)$/)){fp();if(lt!=="ol"){fl();html+="<ol>";lt="ol";}html+="<li>"+inline(m[1])+"</li>";continue;}para.push(line);}fp();fl();return html;}
+function inline(t){let s=esc(t);s=s.replace(/!\[([^\]]*)\]\(([^)\s]+)[^)]*\)/g,(m,a,u)=>imgTag(u,a));s=s.replace(/\[([^\]]+)\]\(([^)\s]+)[^)]*\)/g,'<a href="$2" target="_blank" rel="noreferrer">$1</a>');s=s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");s=s.replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<em>$2</em>");s=s.replace(/`([^`]+)`/g,"<code>$1</code>");return s;}
+function mdToHtml(md){if(!md)return"";let src=md.replace(/\r\n/g,"\n");const blocks=[];src=src.replace(/```[\w]*\n([\s\S]*?)```/g,(m,c)=>{blocks.push(c);return"\u0000CB"+(blocks.length-1)+"\u0000";});const lines=src.split("\n");let html="",lt=null,para=[];const fp=()=>{if(para.length){html+="<p>"+inline(para.join(" "))+"</p>";para=[];}};const fl=()=>{if(lt){html+="</"+lt+">";lt=null;}};for(const raw of lines){const line=raw.replace(/\s+$/,"");const t=line.trim();let m;if(/^\u0000CB\d+\u0000$/.test(t)){fp();fl();html+="<pre><code>"+esc(blocks[+t.match(/\d+/)[0]])+"</code></pre>";continue;}if(!t){fp();fl();continue;}if(m=line.match(/^(#{1,4})\s+(.*)$/)){fp();fl();const lvl=Math.min(m[1].length+1,5);html+="<h"+lvl+">"+inline(m[2])+"</h"+lvl+">";continue;}if(m=t.match(/^!\[([^\]]*)\]\(([^)\s]+)[^)]*\)$/)){fp();fl();html+=imgTag(m[2],m[1]);continue;}if(/^https?:\/\/\S+$/.test(t)){fp();fl();if(/\.(png|jpe?g|gif|webp|svg)(\?|$)/i.test(t)||/user-attachments\/assets|githubusercontent\.com/.test(t))html+=imgTag(t,"");else html+='<a class="md-asset" href="'+t+'" target="_blank" rel="noreferrer">Ver adjunto</a>';continue;}if(m=line.match(/^>\s?(.*)$/)){fp();fl();html+="<blockquote>"+inline(m[1])+"</blockquote>";continue;}if(m=line.match(/^[-*]\s+(.*)$/)){fp();if(lt!=="ul"){fl();html+="<ul>";lt="ul";}html+="<li>"+inline(m[1])+"</li>";continue;}if(m=line.match(/^\d+[.)]\s+(.*)$/)){fp();if(lt!=="ol"){fl();html+="<ol>";lt="ol";}html+="<li>"+inline(m[1])+"</li>";continue;}para.push(line);}fp();fl();return html;}
 function pill(text,color){return '<span class="pill" style="color:'+color+';border-color:'+color+'55;background:'+color+'12">'+text+'</span>';}
 function modDe(labels){return (labels||[]).map(l=>l.name).find(n=>MODULOS[n])||"Otro";}
 function fecha(s){return new Date(s).toLocaleDateString("es-MX",{day:"2-digit",month:"short",year:"numeric"});}
@@ -244,7 +249,29 @@ function renderSol(){
   const q=(document.getElementById("q").value||"").toLowerCase();
   const list=SOL.filter(i=>(filtroMod==="Todos"||i.modulo===filtroMod)&&(!q||(i.titulo+" "+i.body).toLowerCase().includes(q)));
   if(!list.length){out.innerHTML='<div class="empty">Aún no hay soluciones publicadas. Cierra un issue con etiqueta de módulo en <code>'+REPO_PUB+'</code> y aparecerá aquí.</div>';return;}
-  out.innerHTML='<div class="grid">'+list.map(i=>'<article class="kbcard"><div class="ctop">'+pill(i.modulo,MODULOS[i.modulo]||"#5B6470")+pill("Resuelto","#3E7C59")+'</div><h3 class="ctitle">'+esc(i.titulo)+'</h3><div class="md">'+mdToHtml(i.body)+'</div><div class="cfoot"><span>#'+i.num+' · '+esc(i.autor)+' · '+i.fecha+'</span><a class="ghlink" href="'+i.url+'" target="_blank" rel="noreferrer">↗ GitHub</a></div></article>').join("")+'</div>';
+  out.innerHTML='<div class="grid">'+list.map(i=>'<article class="kbcard"><div class="ctop">'+pill(i.modulo,MODULOS[i.modulo]||"#5B6470")+pill("Resuelto","#3E7C59")+'</div><h3 class="ctitle">'+esc(i.titulo)+'</h3><div class="md">'+mdToHtml(i.body)+'</div><button class="ghost solbtn" id="btn-'+i.num+'" onclick="toggleSol('+i.num+')">▾ Ver solución y evidencia</button><div class="solbox hidden" id="sol-'+i.num+'"></div><div class="cfoot"><span>#'+i.num+' · '+esc(i.autor)+' · '+i.fecha+'</span><a class="ghlink" href="'+i.url+'" target="_blank" rel="noreferrer">↗ GitHub</a></div></article>').join("")+'</div>';
+}
+
+async function toggleSol(num){
+  const box=document.getElementById("sol-"+num), btn=document.getElementById("btn-"+num);
+  if(!box.classList.contains("hidden")){box.classList.add("hidden");btn.innerHTML="\u25BE Ver soluci\u00F3n y evidencia";return;}
+  if(!box.dataset.loaded){
+    btn.innerHTML='<span class="spin"></span> Cargando soluci\u00F3n…';
+    try{
+      const r=await fetch("https://api.github.com/repos/"+REPO_PUB+"/issues/"+num+"/comments?per_page=50",{headers:{Accept:"application/vnd.github+json"}});
+      if(!r.ok){throw new Error(r.status);}
+      const cs=await r.json();
+      box.innerHTML = cs.length
+        ? cs.map(c=>'<div class="solpart md">'+mdToHtml(c.body||"")+'</div>').join("")
+        : '<div class="solpart" style="color:var(--sub);font-size:13px">La soluci\u00F3n est\u00E1 en el reporte de arriba.</div>';
+      box.dataset.loaded="1";
+    }catch(e){
+      const lim=String(e).indexOf("403")>=0?" (l\u00EDmite de GitHub: 60 lecturas/hora, intenta luego)":"";
+      box.innerHTML='<div class="errbox" style="margin:0">No se pudieron cargar los comentarios'+lim+'.</div>';
+    }
+  }
+  box.classList.remove("hidden");
+  btn.innerHTML="\u25B4 Ocultar soluci\u00F3n";
 }
 
 /* ---- Panel (abiertos) ---- */
