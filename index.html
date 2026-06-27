@@ -72,7 +72,11 @@
   .md pre{background:var(--navy);color:#E8EEF5;border-radius:10px;padding:12px;overflow:auto;font-size:12px;margin:8px 0;}
   .md pre code{background:none;border:none;color:inherit;padding:0;}
   .md blockquote{border-left:3px solid var(--line);margin:8px 0;padding:2px 0 2px 12px;color:var(--sub);}
-  .md .md-img{max-width:100%;border-radius:10px;border:1px solid var(--line);margin:8px 0;display:block;}
+  .md img,.md .md-img{max-width:100%;border-radius:10px;border:1px solid var(--line);margin:8px 0;display:block;}
+  .md a img{border:1px solid var(--line);}
+  .md table{border-collapse:collapse;margin:8px 0;font-size:12.5px;}
+  .md th,.md td{border:1px solid var(--line);padding:5px 9px;}
+  .md th{background:var(--paper);color:var(--navy);}
   .md .md-asset{display:inline-block;margin:4px 0;color:var(--teal);font-weight:600;text-decoration:none;}
   .panel{display:flex;flex-direction:column;gap:14px;max-width:760px;margin:0 auto;}
   .pcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;}
@@ -238,9 +242,9 @@ function fecha(s){return new Date(s).toLocaleDateString("es-MX",{day:"2-digit",m
 /* ---- Soluciones (cerrados) ---- */
 async function cargarSol(){
   const out=document.getElementById("outSol");out.innerHTML='<div class="empty"><span class="spin"></span> Leyendo soluciones desde GitHub…</div>';SOL=null;SOL_ERR="";
-  try{const r=await fetch("https://api.github.com/repos/"+REPO_PUB+"/issues?state=closed&per_page=50",{headers:{Accept:"application/vnd.github+json"}});
+  try{const r=await fetch("https://api.github.com/repos/"+REPO_PUB+"/issues?state=closed&per_page=50",{headers:{Accept:"application/vnd.github.full+json"}});
     if(!r.ok){SOL_ERR=r.status===404?"No encontramos el repositorio. Revisa REPO_PUB en el código.":r.status===403?"Límite temporal de GitHub (60 lecturas/hora). Intenta en un momento.":"GitHub respondió error "+r.status+".";SOL=[];renderSol();return;}
-    const a=await r.json();SOL=a.filter(i=>!i.pull_request).map(i=>({num:i.number,titulo:i.title,body:i.body||"",url:i.html_url,autor:(i.user&&i.user.login)||"",fecha:fecha(i.closed_at||i.created_at),modulo:modDe(i.labels)}));renderSol();
+    const a=await r.json();SOL=a.filter(i=>!i.pull_request).map(i=>({num:i.number,titulo:i.title,body:i.body||"",bodyHtml:i.body_html||"",url:i.html_url,autor:(i.user&&i.user.login)||"",fecha:fecha(i.closed_at||i.created_at),modulo:modDe(i.labels)}));renderSol();
   }catch(e){SOL_ERR="No se pudo conectar con GitHub.";SOL=[];renderSol();}
 }
 function renderSol(){
@@ -258,11 +262,11 @@ async function toggleSol(num){
   if(!box.dataset.loaded){
     btn.innerHTML='<span class="spin"></span> Cargando soluci\u00F3n…';
     try{
-      const r=await fetch("https://api.github.com/repos/"+REPO_PUB+"/issues/"+num+"/comments?per_page=50",{headers:{Accept:"application/vnd.github+json"}});
+      const r=await fetch("https://api.github.com/repos/"+REPO_PUB+"/issues/"+num+"/comments?per_page=50",{headers:{Accept:"application/vnd.github.full+json"}});
       if(!r.ok){throw new Error(r.status);}
       const cs=await r.json();
       box.innerHTML = cs.length
-        ? cs.map(c=>'<div class="solpart md">'+mdToHtml(c.body||"")+'</div>').join("")
+        ? cs.map(c=>'<div class="solpart md">'+(c.body_html||mdToHtml(c.body||""))+'</div>').join("")
         : '<div class="solpart" style="color:var(--sub);font-size:13px">La soluci\u00F3n est\u00E1 en el reporte de arriba.</div>';
       box.dataset.loaded="1";
     }catch(e){
@@ -277,9 +281,9 @@ async function toggleSol(num){
 /* ---- Panel (abiertos) ---- */
 async function cargarPanel(){
   const out=document.getElementById("outPanel");out.innerHTML='<div class="empty"><span class="spin"></span> Leyendo issues abiertos…</div>';PAN=null;PAN_ERR="";
-  try{const r=await fetch("https://api.github.com/repos/"+REPO_PUB+"/issues?state=open&per_page=50",{headers:{Accept:"application/vnd.github+json"}});
+  try{const r=await fetch("https://api.github.com/repos/"+REPO_PUB+"/issues?state=open&per_page=50",{headers:{Accept:"application/vnd.github.full+json"}});
     if(!r.ok){PAN_ERR=r.status===404?"No encontramos el repositorio.":r.status===403?"Límite temporal de GitHub (60 lecturas/hora).":"GitHub respondió error "+r.status+".";PAN=[];renderPanel();return;}
-    const a=await r.json();PAN=a.filter(i=>!i.pull_request).map(i=>({num:i.number,titulo:i.title,body:i.body||"",url:i.html_url,autor:(i.user&&i.user.login)||"",fecha:fecha(i.created_at),modulo:modDe(i.labels)}));renderPanel();
+    const a=await r.json();PAN=a.filter(i=>!i.pull_request).map(i=>({num:i.number,titulo:i.title,body:i.body||"",bodyHtml:i.body_html||"",url:i.html_url,autor:(i.user&&i.user.login)||"",fecha:fecha(i.created_at),modulo:modDe(i.labels)}));renderPanel();
   }catch(e){PAN_ERR="No se pudo conectar con GitHub.";PAN=[];renderPanel();}
 }
 function renderPanel(){
